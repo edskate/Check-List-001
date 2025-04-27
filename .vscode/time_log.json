@@ -88,6 +88,64 @@
           "email": "edskateicevida@gmail.com"
         },
         "timeSpent": 10
+      },
+      {
+        "date": "2025-04-27T16:40:12.904Z",
+        "user": {
+          "name": "Edy_97_2024",
+          "email": "edskateicevida@gmail.com"
+        },
+        "timeSpent": 54
+      },
+      {
+        "date": "2025-04-27T16:40:23.102Z",
+        "user": {
+          "name": "Edy_97_2024",
+          "email": "edskateicevida@gmail.com"
+        },
+        "timeSpent": 10
+      },
+      {
+        "date": "2025-04-27T16:46:30.148Z",
+        "user": {
+          "name": "Edy_97_2024",
+          "email": "edskateicevida@gmail.com"
+        },
+        "timeSpent": 30
+      },
+      {
+        "date": "2025-04-27T16:46:30.485Z",
+        "user": {
+          "name": "Edy_97_2024",
+          "email": "edskateicevida@gmail.com"
+        },
+        "timeSpent": 31
+      }
+    ],
+    ".vscode\\settings.json": [
+      {
+        "date": "2025-04-27T16:46:37.521Z",
+        "user": {
+          "name": "Edy_97_2024",
+          "email": "edskateicevida@gmail.com"
+        },
+        "timeSpent": 0
+      },
+      {
+        "date": "2025-04-27T16:46:38.777Z",
+        "user": {
+          "name": "Edy_97_2024",
+          "email": "edskateicevida@gmail.com"
+        },
+        "timeSpent": 1
+      },
+      {
+        "date": "2025-04-27T16:46:40.493Z",
+        "user": {
+          "name": "Edy_97_2024",
+          "email": "edskateicevida@gmail.com"
+        },
+        "timeSpent": 2
       }
     ]
   }
