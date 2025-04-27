@@ -232,6 +232,30 @@
           "email": "edskateicevida@gmail.com"
         },
         "timeSpent": 123
+      },
+      {
+        "date": "2025-04-27T17:07:30.873Z",
+        "user": {
+          "name": "Edy_97_2024",
+          "email": "edskateicevida@gmail.com"
+        },
+        "timeSpent": 23
+      },
+      {
+        "date": "2025-04-27T17:07:44.314Z",
+        "user": {
+          "name": "Edy_97_2024",
+          "email": "edskateicevida@gmail.com"
+        },
+        "timeSpent": 14
+      },
+      {
+        "date": "2025-04-27T17:28:48.339Z",
+        "user": {
+          "name": "Edy_97_2024",
+          "email": "edskateicevida@gmail.com"
+        },
+        "timeSpent": 1264
       }
     ],
     ".vscode\\settings.json": [
