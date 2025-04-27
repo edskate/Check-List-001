@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist de Produtos com Relógio Digital LED</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0d0d0d;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: start;
+            min-height: 100vh;
+            color: #fff;
+        }
+        header {
+            background: #4CAF50;
+            color: white;
+            width: 100%;
+            padding: 1rem;
+            text-align: center;
+        }
+        #clock {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 3rem;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: #000;
+            color: #0f0;
+            border: 5px solid #0f0;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #0f0;
+            letter-spacing: 5px;
+        }
+        #descricaoHorario {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+        #bloqueio {
+            margin-top: 2rem;
+            font-size: 1.2rem;
+            color: red;
+        }
+        #checklist {
+            margin-top: 2rem;
+            width: 90%;
+            max-width: 500px;
+            background: #222;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,255,0,0.5);
+            display: none;
+        }
+        .produto {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .produto input {
+            margin-right: 10px;
+        }
+        #botaoSalvarPDF, #botaoSalvarHistoricoPDF {
+            margin-top: 1rem;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            background: #0f0;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 10px #0f0;
+            margin-right: 10px;
+        }
+        #botaoSalvarPDF:hover, #botaoSalvarHistoricoPDF:hover {
+            background: #00ff00;
+        }
+        #historicoSalvos {
+            margin-top: 2rem;
+            width: 90%;
+            max-width: 500px;
+            background: #333;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,255,0,0.3);
+        }
+        #historicoSalvos h2 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: #0f0;
+        }
+        #historicoSalvos ul {
+            list-style: none;
+            padding: 0;
+        }
+        #historicoSalvos li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #555;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Checklist de Figurinos :</h1>
+    </header>
+
+    <div id="clock"></div>
+    <div id="descricaoHorario"></div>
+    <div id="bloqueio"></div>
+
+    <div id="checklist">
+        <div class="produto">
+            <input type="checkbox" id="produto1">
+            <label for="produto1">Figurino Abertura</label>
+        </div>
+        <div class="produto">
+            <input type="checkbox" id="produto2">
+            <label for="produto2">Figurino Social</label>
+        </div>
+        <div class="produto">
+            <input type="checkbox" id="produto3">
+            <label for="produto3">Figurino Jaqueta Preta + acessorios </label>
+        </div>
+        <div class="produto">
+            <input type="checkbox" id="produto4">
+            <label for="produto4">Figurino Casaco Zumbi</label>
+        </div>
+        <div class="produto">
+            <input type="checkbox" id="produto5">
+            <label for="produto5">Sapatos, oculos </label>
+        </div>
+        <button id="botaoSalvarPDF">Salvar Checklist como PDF</button>
+        <button id="botaoSalvarHistoricoPDF">Salvar Histórico como PDF</button>
+    </div>
+
+    <div id="historicoSalvos">
+        <h2>Histórico de PDFs Salvos</h2>
+        <ul id="listaHistorico"></ul>
+    </div>
+
+    <script>
+        const horaInicio = 13;
+        const minutoInicio = 0;
+        const horaFim = horaInicio + 0;
+        const minutoFim = 10;
+        const historico = [];
+
+        function atualizarRelogio() {
+            const agora = new Date();
+            const horas = agora.getHours().toString().padStart(2, '0');
+            const minutos = agora.getMinutes().toString().padStart(2, '0');
+            const segundos = agora.getSeconds().toString().padStart(2, '0');
+            document.getElementById('clock').textContent = `${horas}:${minutos}:${segundos}`;
+
+            document.getElementById('descricaoHorario').textContent = `Horário permitido: ${horaInicio.toString().padStart(2,'0')}:${minutoInicio.toString().padStart(2,'0')} até ${horaFim.toString().padStart(2,'0')}:${minutoFim.toString().padStart(2,'0')}`;
+
+            const inicioPermitido = new Date();
+            inicioPermitido.setHours(horaInicio, minutoInicio, 0);
+            const fimPermitido = new Date();
+            fimPermitido.setHours(horaFim, minutoFim + 1, 0);
+
+            if (agora >= inicioPermitido && agora < fimPermitido) {
+                document.getElementById('bloqueio').textContent = '';
+                document.getElementById('checklist').style.display = 'block';
+            } else {
+                document.getElementById('bloqueio').textContent = 'Fora do horário permitido! Acesso bloqueado.';
+                document.getElementById('checklist').style.display = 'none';
+            }
+        }
+
+        function salvarChecklistPDF() {
+            const agora = new Date();
+            const horaAtual = agora.getHours().toString().padStart(2, '0');
+            const minutoAtual = agora.getMinutes().toString().padStart(2, '0');
+            const segundoAtual = agora.getSeconds().toString().padStart(2, '0');
+            const nomeArquivo = `checklist_${horaAtual}h${minutoAtual}m${segundoAtual}s.pdf`;
+
+            const element = document.body;  // Alterado para salvar toda a página
+            html2pdf().from(element).set({
+                margin: 10,
+                filename: nomeArquivo,
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            }).save();
+
+            historico.push(`Checklist salvo às ${horaAtual}:${minutoAtual}:${segundoAtual}`);
+            atualizarListaHistorico(`Checklist salvo às ${horaAtual}:${minutoAtual}:${segundoAtual}`);
+        }
+
+        function salvarHistoricoPDF() {
+            if (historico.length === 0) {
+                alert('Nenhum histórico disponível.');
+                return;
+            }
+
+            const historicoTexto = historico.join('\n');
+            const elementoHistorico = document.createElement('div');
+            elementoHistorico.style.padding = '20px';
+            elementoHistorico.style.color = '#000';
+            elementoHistorico.innerText = historicoTexto;
+
+            html2pdf().from(elementoHistorico).set({
+                margin: 10,
+                filename: 'historico_checklist.pdf',
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            }).save();
+        }
+
+        function atualizarListaHistorico(item) {
+            const lista = document.getElementById('listaHistorico');
+            const li = document.createElement('li');
+            li.textContent = item;
+            lista.appendChild(li);
+        }
+
+        document.getElementById('botaoSalvarPDF').addEventListener('click', salvarChecklistPDF);
+        document.getElementById('botaoSalvarHistoricoPDF').addEventListener('click', salvarHistoricoPDF);
+
+        setInterval(atualizarRelogio, 1000);
+        atualizarRelogio();
+    </script>
+
+</body>
+</html>
