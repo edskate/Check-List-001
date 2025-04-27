@@ -1,0 +1,30 @@
+{
+  "Check-List-001": {
+    "index.html": [
+      {
+        "date": "2025-04-27T16:26:26.849Z",
+        "user": {
+          "name": "Edy_97_2024",
+          "email": "edskateicevida@gmail.com"
+        },
+        "timeSpent": 6
+      },
+      {
+        "date": "2025-04-27T16:26:26.986Z",
+        "user": {
+          "name": "Edy_97_2024",
+          "email": "edskateicevida@gmail.com"
+        },
+        "timeSpent": 6
+      },
+      {
+        "date": "2025-04-27T16:26:37.469Z",
+        "user": {
+          "name": "Edy_97_2024",
+          "email": "edskateicevida@gmail.com"
+        },
+        "timeSpent": 10
+      }
+    ]
+  }
+}
