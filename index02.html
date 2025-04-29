@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alerta Antes do Evento</title>
+    <title>Checklist com Relógio LED</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
             text-align: center;
-            margin-top: 50px;
+            background-color: #f4f4f4;
         }
 
         #clock {
@@ -20,20 +26,158 @@
             padding: 10px 20px;
             border-radius: 10px;
             display: inline-block;
-            box-shadow: 0 0 10px #4CAF50;
+            box-shadow: 0 0 20px #4CAF50, 0 0 30px #4CAF50 inset;
+            text-shadow: 0 0 10px #4CAF50, 0 0 20px #4CAF50;
+        }
+
+        #checklist {
+            margin-top: 30px;
+            text-align: left;
+            display: inline-block;
+        }
+
+        .produto {
+            margin-bottom: 10px;
+        }
+
+        .horario {
+            font-size: 0.9rem;
+            color: #555;
+            margin-left: 10px;
+        }
+
+        .status {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .ativo {
+            color: green;
+        }
+
+        .bloqueado {
+            color: red;
+        }
+
+        #alertaHorario {
+            font-size: 1.2rem;
+            color: red;
+            margin-top: 20px;
+        }
+
+        #botaoSalvarPDF {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #botaoSalvarPDF:hover {
+            background-color: #45a049;
+        }
+
+        input[type="number"] {
+            padding: 5px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+            font-size: 1rem;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <h1>Alerta de Aviso</h1>
-    <p>O alerta será exibido uma hora antes do evento, mas apenas se for antes das 17:00.</p>
+    <h1>Checklist com Relógio LED</h1>
+    <p>Defina o tempo limite para o checklist (em minutos):</p>
+    <input type="number" id="tempoLimiteInput" placeholder="Ex: 60" min="1">
+    <button id="iniciarChecklist">Iniciar</button>
     <div id="clock"></div>
+    <p id="alertaHorario"></p>
 
+    <div id="checklist" style="display: none;">
+        <h2>Checklist de Figurinos</h2>
+        <div class="produto">
+            <input type="checkbox" id="produto1">
+            <label for="produto1">Figurino Abertura</label>
+            <span class="horario" id="horario1"></span>
+            <span class="status ativo" id="status1">Ativo</span>
+        </div>
+        <div class="produto">
+            <input type="checkbox" id="produto2">
+            <label for="produto2">Figurino Terno Social</label>
+            <span class="horario" id="horario2"></span>
+            <span class="status ativo" id="status2">Ativo</span>
+        </div>
+        <div class="produto">
+            <input type="checkbox" id="produto3">
+            <label for="produto3">Figurino Jaqueta Brilhante</label>
+            <span class="horario" id="horario3"></span>
+            <span class="status ativo" id="status3">Ativo</span>
+        </div>
+        <div class="produto">
+            <input type="checkbox" id="produto4">
+            <label for="produto4">Figurino Terror</label>
+            <span class="horario" id="horario4"></span>
+            <span class="status ativo" id="status4">Ativo</span>
+        </div>
+        <div class="produto">
+            <input type="checkbox" id="produto5">
+            <label for="produto5">Acessórios: Óculos e Meias</label>
+            <span class="horario" id="horario5"></span>
+            <span class="status ativo" id="status5">Ativo</span>
+        </div>
+        <div class="produto">
+            <input type="checkbox" id="produto6">
+            <label for="produto6">Figurino Casual</label>
+            <span class="horario" id="horario6"></span>
+            <span class="status ativo" id="status6">Ativo</span>
+        </div>
+        <div class="produto">
+            <input type="checkbox" id="produto7">
+            <label for="produto7">Figurino Esportivo</label>
+            <span class="horario" id="horario7"></span>
+            <span class="status ativo" id="status7">Ativo</span>
+        </div>
+        <div class="produto">
+            <input type="checkbox" id="produto8">
+            <label for="produto8">Figurino de Gala</label>
+            <span class="horario" id="horario8"></span>
+            <span class="status ativo" id="status8">Ativo</span>
+        </div>
+        <div class="produto">
+            <input type="checkbox" id="produto9">
+            <label for="produto9">Figurino de Dança</label>
+            <span class="horario" id="horario9"></span>
+            <span class="status ativo" id="status9">Ativo</span>
+        </div>
+        <div class="produto">
+            <input type="checkbox" id="produto10">
+            <label for="produto10">Figurino de Encerramento</label>
+            <span class="horario" id="horario10"></span>
+            <span class="status ativo" id="status10">Ativo</span>
+        </div>
+    </div>
+
+    <button id="botaoSalvarPDF" style="display: none;">Salvar como PDF</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <script>
-        // Configuração do horário e data do evento
-        const dataEvento = new Date();
-        dataEvento.setFullYear(2025, 3, 27); // Exemplo: 27 de abril de 2025
-        dataEvento.setHours(18, 0, 0, 0); // Exemplo: 18h (6 PM)
+        let tempoLimite;
 
         function atualizarRelogio() {
             const agora = new Date();
@@ -43,25 +187,66 @@
             document.getElementById('clock').textContent = `${horas}:${minutos}:${segundos}`;
         }
 
-        function verificarHorario() {
+        function registrarHorario(id) {
             const agora = new Date();
-
-            // Calcula o tempo restante em milissegundos
-            const diferenca = dataEvento - agora;
-
-            // Verifica se está exatamente uma hora antes do evento e antes das 17:00
-            if (diferenca <= 3600000 && diferenca > 3540000 && agora.getHours() < 17) {
-                alert("Falta 1 hora para o evento! Prepare-se.");
-            }
+            const horario = `${agora.getHours().toString().padStart(2, '0')}:${agora.getMinutes().toString().padStart(2, '0')}:${agora.getSeconds().toString().padStart(2, '0')}`;
+            document.getElementById(`horario${id}`).textContent = `Selecionado às ${horario}`;
+            const status = document.getElementById(`status${id}`);
+            status.textContent = "Bloqueado";
+            status.classList.remove("ativo");
+            status.classList.add("bloqueado");
         }
+
+        function bloquearCheckboxes() {
+            document.querySelectorAll('.produto input[type="checkbox"]').forEach((checkbox, index) => {
+                checkbox.disabled = true;
+                const status = document.getElementById(`status${index + 1}`);
+                status.textContent = "Bloqueado";
+                status.classList.remove("ativo");
+                status.classList.add("bloqueado");
+            });
+            document.getElementById('alertaHorario').textContent = "Tempo esgotado! As opções foram bloqueadas.";
+            alert("O tempo acabou! Todas as opções foram bloqueadas.");
+        }
+
+        document.getElementById('iniciarChecklist').addEventListener('click', () => {
+            const input = document.getElementById('tempoLimiteInput').value;
+            tempoLimite = parseInt(input) * 60 * 1000; // Converte minutos para milissegundos
+
+            if (isNaN(tempoLimite) || tempoLimite <= 0) {
+                alert("Por favor, insira um valor válido para o tempo limite.");
+                return;
+            }
+
+            document.getElementById('checklist').style.display = "block";
+            document.getElementById('botaoSalvarPDF').style.display = "inline-block";
+
+            // Bloqueia todas as checkboxes após o tempo limite
+            setTimeout(bloquearCheckboxes, tempoLimite);
+        });
+
+        // Adiciona eventos aos checkboxes
+        document.querySelectorAll('.produto input[type="checkbox"]').forEach((checkbox, index) => {
+            checkbox.addEventListener('change', () => {
+                registrarHorario(index + 1);
+                checkbox.disabled = true; // Bloqueia o checkbox após a interação
+            });
+        });
 
         // Atualiza o relógio em tempo real
         setInterval(atualizarRelogio, 1000);
-        atualizarRelogio(); // Atualiza imediatamente ao carregar a página
+        atualizarRelogio();
 
-        // Verifica o horário a cada minuto
-        setInterval(verificarHorario, 60000);
-        verificarHorario(); // Verifica imediatamente ao carregar a página
+        // Função para salvar a página como PDF
+        document.getElementById('botaoSalvarPDF').addEventListener('click', () => {
+            const element = document.body; // Seleciona o corpo da página
+            html2pdf().from(element).set({
+                margin: 10,
+                filename: 'checklist.pdf',
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            }).save();
+        });
     </script>
 </body>
 </html>
